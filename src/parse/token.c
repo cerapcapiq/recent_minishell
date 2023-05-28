@@ -15,20 +15,23 @@ int	builtin_cmd(char *token)
 	return (0);
 }
 
-int if_var(char *token)
+int	if_var(char *token)
 {
-	char c = '=';
+	char	c;
+
+	c = '=';
 	while (*token != '\0')
 	{
 		if (*token == c)
-			{printf("the toke n var");
+		{
+			printf("the toke n var");
 			return (VAR);
-			break;
-			}
-		
+			break ;
+		}
+
 		token++;
 	}
-return 0;
+	return (0);
 }
 
 int	delim_token(char *token)
@@ -91,11 +94,15 @@ t_token	*new_token(t_mini *mini, char *data)
 	quote_type = 0;
 	res = (t_token *)malloc(sizeof(t_token));
 	if (detect_q(data))
-		{quote_type = 1;
-		new = ft_delete_quote_sin(data);}
+	{
+		quote_type = 1;
+		new = ft_delete_quote_sin(data);
+	}
 	else if (ft_double_detect_quote(data))
-		{quote_type = 2;
-		new = ft_delete_quote(data);}
+	{
+		quote_type = 2;
+		new = ft_delete_quote(data);
+	}
 	else
 		new = ft_strdup(data);
 	if (quote_type != 0)
@@ -107,7 +114,7 @@ t_token	*new_token(t_mini *mini, char *data)
 	res->next = 0;
 	res->quote = quote_type;
 	printf("token type is %d\n", res->type);
-		printf("token str is %s\n", res->str);
+	printf("token str is %s\n", res->str);
 	return (res);
 }
 
