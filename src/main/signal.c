@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:52 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/12 18:18:40 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/28 22:18:09 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ void	sig_handler(int signum)
 	printf("%d done", signum);
 }
 
-/*static void	int_handler(void)
+static void	int_handler(int __attribute__((unused)) signal)
 {
-	printf("\n"); // Move to a new line
-	rl_on_new_line(); // Regenerate the prompt on a newline
-   // rl_replace_line(" ", 0); // Clear the previous text
-   rl_redisplay();
-}*/
+	printf("\n");
+	rl_on_new_line();
+	rl_replace_line(" ", 0);
+	rl_redisplay();
+}
 
 void	disable_veof(void)
 {
@@ -46,4 +46,5 @@ void	define_signal(void)
 {
 	disable_veof();
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, int_handler);
 }
