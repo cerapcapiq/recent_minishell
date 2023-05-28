@@ -34,7 +34,7 @@ if (ms->tokens->type != VAR)
 		argc = count_argc(argv);
 	exit_code = 0;
 	if (!ft_strcmp(command, "cd"))
-		cd(argc, argv);
+		cd(argc, argv, ms->envListHead);
 	else if (!ft_strcmp(command, "exit"))
 		mini_exit(argv);
 else if (!ft_strcmp(command, "export"))
