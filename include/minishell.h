@@ -103,7 +103,7 @@ int	execute_builtin(char **argv, char *command, t_mini *ms);
 int findSubstring(const char* string, const char* substring);
 void	ft_export(char **str, Node* envListHead, MyNode *varListHead);
 int	echo(int argc, char **argv, t_token curr, MyNode *varListHead, Node* envListHead);
-int	cd(int argc, char **argv);
+int     cd(int argc, char **argv, Node* envListHead);
 int	pwd(void);
 int	mini_exit(char **argv);
 void	ft_prev_dir(char *path);
