@@ -11,7 +11,12 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 		argc = count_argc(argv);
 	builtin_cmd = 0;
 	if (!ft_strcmp(command, "echo"))
-		builtin_cmd = echo(argc, argv, *token.next, ms->varListHead,ms->envListHead);
+	{
+		if (argc < 2)
+		  printf("\n");
+		else
+			builtin_cmd = echo(argc, argv, *token.next, ms->varListHead,ms->envListHead);
+	}
 	else if (!ft_strcmp(command, "pwd"))
 		builtin_cmd = pwd();
 	else if (!ft_strcmp(command, "export"))

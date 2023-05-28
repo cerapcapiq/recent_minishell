@@ -118,6 +118,7 @@ void	call_pipe_redirect(t_mini *mini, t_token *command, t_token *tok);
 int	redirect_output(t_mini *ms, t_token *token, int type);
 int	redirect_input(t_mini *ms, t_token *token);
 void	here_doc_input(t_token *command, int pid);
+void	handle_pipe_character(const char *s, size_t i, char **result, size_t *j);
 
 //signal
 void	define_signal(void);
