@@ -1,5 +1,17 @@
 
 #include "../include/minishell.h"
+#include <string.h>
+
+char *dollar_exit(char *av)
+{
+	 char exitStatus[16];
+	if (!ft_strcmp(av, "$?"))
+	{
+		snprintf(exitStatus, sizeof(exitStatus), "%d", g_exit_num);
+		strcpy(av, exitStatus);
+	}
+	return (av);
+}
 
 void	parse(t_mini *mini, char *input)
 {
@@ -21,6 +33,7 @@ void	parse(t_mini *mini, char *input)
 	i = 0;
 	while (split[++i])
 		token_addend(split[i], mini);
+	dollar_exit(*split);
 	execute(mini);
 	mini->cmd = 1;
 	token_free(mini->tokens);

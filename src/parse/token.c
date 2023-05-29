@@ -51,13 +51,13 @@ int	delim_token(char *token)
 
 int	token_type(t_mini *mini, char *token)
 {
-	//char	command[256];
+	// char	command[256];
 
 	// if (!ft_strcmp(token, "$?"))
 	// {
 	// 	snprintf(command, sizeof(command), "%d", g_exit_num);
 	// 	token = command;
-	// 	return (ARG);
+	// 	return (CMD);
 	// }
 	if (delim_token(token))
 	{
