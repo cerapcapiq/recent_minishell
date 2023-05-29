@@ -55,7 +55,7 @@ int	ft_ex(char **argv, char **envp, int i, Node* envListHead)
 		argv[i] = 0;
 		if (execve(*argv, envp, ft_getenv(envListHead)) == -1)
 		{
-			perror("Error: command not found");
+			printf("Error: %s command not found\n", *envp);
 			exit(1);
 		}
 	}
