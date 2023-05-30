@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:59:53 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 15:41:19 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:04:08 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@
 
 int	cd(int argc, char **argv, t_node *env_list)
 {
-	char	*old_pwd;
+	char	**old_pwd;
 	char	*cwd;
 	char	curr[1024];
-	char	*pwd;
+	char	**pwd;
 
-	old_pwd = {"OLDPWD", "OLDPWD", "OLDPWD"};
-	pwd = {"PWD", "PWD"};
+	old_pwd = (char *[]){"OLDPWD", "OLDPWD"};
+	pwd = (char *[]){"PWD", "PWD"};
 	(void) argc;
 	cwd = NULL;
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
