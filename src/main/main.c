@@ -38,6 +38,8 @@ char	*display_readline(char *input)
 
 int	ft_whitespace(char *input)
 {
+	if (input == NULL)
+		return (0);
 	while (*input == '\t' || *input == ' ' )
 		input++;
 	if (*input == '\0')
