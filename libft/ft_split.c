@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "stdlib.h"
+#include <stdlib.h>
 #include "libft.h"
 
 static char	**ft_malloc_error(char **tab)
@@ -54,48 +54,23 @@ static unsigned int	ft_get_nb_strs(char const *s, char c)
 	return (nb_strs);
 }
 
-// static void	ft_get_next_str(char **next_str, unsigned int *next_str_len, char c)
-// {
-// 	unsigned int	i;
-
-// 	*next_str += *next_str_len;
-// 	*next_str_len = 0;
-// 	i = 0;
-// 	while (**next_str && (**next_str == c))
-// 		(*next_str)++;
-// 	while ((*next_str)[i])
-// 	{
-// 		if ((*next_str)[i] == c)
-// 			return ;
-// 		(*next_str_len)++;
-// 		i++;
-// 	}
-// }
-
 static void	ft_get_next_str(char **next_str, unsigned int *next_str_len, char c)
 {
 	unsigned int	i;
-    int	in_quotes;
 
 	*next_str += *next_str_len;
 	*next_str_len = 0;
 	i = 0;
-	in_quotes = 0;
-	while (**next_str && (**next_str == c || in_quotes))
-	{
-		if (**next_str == '"' && (*((*next_str) - 1) != '\\' || *((*next_str) - 2) == '\\'))
-			in_quotes = !in_quotes;
+	while (**next_str && **next_str == c)
 		(*next_str)++;
-	}
-	while ((*next_str)[i] && (!in_quotes || (*next_str)[i] != '"'))
+	while ((*next_str)[i])
 	{
-		if ((*next_str)[i] == c && !in_quotes)
+		if ((*next_str)[i] == c)
 			return ;
 		(*next_str_len)++;
 		i++;
 	}
 }
-
 
 char	**ft_split(char const *s, char c)
 {
@@ -118,10 +93,9 @@ char	**ft_split(char const *s, char c)
 	{
 		ft_get_next_str(&next_str, &next_str_len, c);
 		tab[i] = malloc(sizeof(char) * (next_str_len + 1));
-		if (!tab[i])
+		if (!tab)
 			return (ft_malloc_error(tab));
-		ft_strlcpy(tab[i], next_str, next_str_len + 1);
-		i++;
+		ft_strlcpy(tab[i++], next_str, next_str_len + 1);
 	}
 	tab[i] = NULL;
 	return (tab);
