@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   var_space.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 12:22:01 by abasarud          #+#    #+#             */
+/*   Updated: 2023/05/30 15:35:57 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 #include <string.h>
 
@@ -5,157 +17,127 @@
 #include <string.h>
 #include <sys/stat.h>
 
-
-char **var_ft_getenv(MyNode *envList)
+char	**var_ft_getenv(t_var *envList)
 {
-	int count = 0;
-	MyNode *current = envList;
-	char **variable = NULL;
+	int		count;
+	int		i;
+	int		len;
+	t_var	*current;
+	char	**variable;
 
-	// Count the number of nodes in the linked list
+	count = 0;
+	current = envList;
+	variable = NULL;
 	while (current != NULL)
-
-{
+	{
 		count++;
 		current = current->next;
 	}
-
-	// Allocate memory for an array of char pointers (plus one extra for NULL termination)
 	variable = (char **)malloc((count + 1) * sizeof(char *));
 	if (variable == NULL)
-	{
-		// Handle memory allocation failure
 		return (NULL);
-	}
-
-	// Traverse the linked list and copy the environment variables to the array
 	current = envList;
-	int i = 0;
+	i = 0;
 	while (current != NULL)
-
-{
-		// Concatenate name and value with '=' separator
-		int len = strlen(current->name) + strlen(current->value) + 2;
+	{
+		len = ft_strlen(current->name) + strlen(current->value) + 2;
 		variable[i] = (char *)malloc(len * sizeof(char));
 		snprintf(variable[i], len, "%s=%s", current->name, current->value);
-
 		if (it_works(variable[i]))
-		{
-			// The command exists and is executable
-			break;
-		}
-
+			break ;
 		current = current->next;
 		i++;
 	}
-
-	// Terminate the array with NULL
 	variable[i] = NULL;
-
 	return (variable);
 }
 
-
-
-char* var_getEnvValue(MyNode *envListHead, char* name)
+char	*var_get_env_value(t_var *env_list, char *name)
 {
-	MyNode* current = envListHead;
+	t_var	*current;
+
+	current = env_list;
 	while (current != NULL)
 	{
-		if (ft_strcmp(current->name, name)== 0)
+		if (ft_strcmp(current->name, name) == 0)
 		{
 			return (current->value);
 		}
 		current = current->next;
 	}
-	return (NULL); // Environment variable not found
+	return (NULL);
 }
 
-MyNode	*var_createNode(char* name, char* value)
+t_var	*var_create_node(char *name, char *value)
 {
-	MyNode* newNode = (MyNode*)malloc(sizeof(MyNode));
-	newNode->name = strdup(name);
-	newNode->value = strdup(value);
-	newNode->next = NULL;
-	return (newNode);
+	t_var	*newt_node;
+
+	newt_node = (t_var *)malloc(sizeof(t_var));
+	newt_node->name = strdup(name);
+	newt_node->value = strdup(value);
+	newt_node->next = NULL;
+	return (newt_node);
 }
 
-void var_deleteNode(MyNode** head, char** name)
+void	var_delete_node(t_var **head, char **name)
 {
-	int i = 1;
-	printf("here is unset %s", name[i]);
+	int		i;
+	t_var	*current;
+	t_var	*previous;
+
+	i = 1;
 	if (*head == NULL)
-	{
-		// List is empty, nothing to delete
-		printf("nono\n");;
-	}
+		printf("nono\n");
 	if (name[i] == NULL)
 		printf("nothing\n");
-	MyNode* current = *head;
-	MyNode* previous = NULL;
-	
-	// Iterate through the list to find the node with the given name
+	current = *head;
+	previous = NULL;
 	while (current != NULL)
-
-{
-		if (strcmp(current->name, name[i]) == 0)
-	
 	{
-			// Node found, delete it
-			
+		if (ft_strcmp(current->name, name[i]) == 0)
+		{
 			if (previous == NULL)
-		
-		{
 				*head = current->next;
-			}
-		
-		else
-		
-		{
-				// The node to be deleted is not the head
+			else
 				previous->next = current->next;
-			}
 			free(current->name);
 			free(current->value);
 			free(current);
-			
-			return;
+			return ;
 		}
-		
-		// Move to the next node
 		previous = current;
 		current = current->next;
-	
 	}
-printf("Node with name '%s' not found in the list.\n", name[i]);
 }
 
-void var_insertNode(MyNode** head, char* name, char* value)
+void	var_insert_node(t_var **head, char *name, char *value)
 {
-	MyNode* newNode = var_createNode(name, value);
+	t_var	*newt_node;
+	t_var	*current;
+
+	newt_node = var_create_node(name, value);
 	if (*head == NULL)
-	{
-		*head = newNode;
-	}
+		*head = newt_node;
 	else
 	{
-		MyNode* current = *head;
+		current = *head;
 		while (current->next != NULL)
 		{
 			current = current->next;
 		}
-		current->next = newNode;
+		current->next = newt_node;
 	}
 }
 
-
-
-void free_Var(MyNode* head)
+void	free_var(t_var	*head)
 {
-	MyNode* current = head;
+	t_var	*current;
+	t_var	*next;
+
+	current = head;
 	while (current != NULL)
 	{
-	   MyNode* next = current->next;
+		next = current->next;
 		free(current->name);
 		free(current->value);
 		free(current);
@@ -163,9 +145,11 @@ void free_Var(MyNode* head)
 	}
 }
 
-void var_printList(MyNode* head)
+void	var_print_list(t_var *head)
 {
-	MyNode* current = head;
+	t_var	*current;
+
+	current = head;
 	if (current == NULL)
 		printf("booba\n");
 	while (current != NULL)
@@ -175,16 +159,14 @@ void var_printList(MyNode* head)
 	}
 	if (current == NULL)
 		printf("booba\n");
+	return ;
 }
 
-MyNode	*var_initializeMyNode(void)
+t_var	*var_initialize_var(void)
 {
-	MyNode* envList = NULL;
+	t_var	*var_list;
 
-	// Iterate over the environment variables
-
-		var_insertNode(&envList, "starting", "minishell");
-	
-
-	return (envList);
+	var_list = NULL;
+	var_insert_node(&var_list, "starting", "minishell");
+	return (var_list);
 }
