@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:40 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 15:45:58 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:23:04 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	parse(t_mini *mini, char *input)
 	i = 0;
 	while (split[++i])
 		token_addend(split[i], mini);
-	dollar_exit(*split);
 	execute(mini);
 	mini->cmd = 1;
 	token_free(mini->tokens);

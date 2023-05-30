@@ -6,26 +6,12 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:42 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 15:46:21 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:51:42 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
-
-int	builtin_cmd(char *token)
-{
-	if (!ft_strcmp(token, "echo")
-		|| !ft_strcmp(token, "cd")
-		|| !ft_strcmp(token, "pwd")
-		|| !ft_strcmp(token, "export")
-		|| !ft_strcmp(token, "unset")
-		|| !ft_strcmp(token, "env")
-		|| !ft_strcmp(token, "exit")
-		|| !ft_strcmp(token, "history"))
-		return (1);
-	return (0);
-}
 
 int	if_var(char *token)
 {
@@ -45,23 +31,11 @@ int	if_var(char *token)
 	return (0);
 }
 
-int	delim_token(char *token)
-{
-	if (!ft_strcmp(token, ">"))
-		return (TRUNC);
-	if (!ft_strcmp(token, ">>"))
-		return (APPEND);
-	if (!ft_strcmp(token, "<"))
-		return (INPUT);
-	if (!ft_strcmp(token, "<<"))
-		return (HEREDOC);
-	if (!ft_strcmp(token, "|"))
-		return (PIPE);
-	return (0);
-}
-
 int	token_type(t_mini *mini, char *token)
 {
+	char	*name;
+	char	*value;
+
 	if (delim_token(token))
 	{
 		mini->cmd = 1;
@@ -72,17 +46,12 @@ int	token_type(t_mini *mini, char *token)
 	else
 		mini->cmd = 0;
 	if (builtin_cmd(token))
-	{
-		printf("var is buitl in = %s", token);
 		return (BUILTIN);
-	}
 	else if (if_var(token))
 	{
-		char* name = strtok(token, "=");
-        char* value = strtok(NULL, "=");
-		printf("name %s", name);
-		printf("value %s", value);
-		var_insert_node(&mini->var_list, name, value);		
+		name = strtok(token, "=");
+		value = strtok(NULL, "=");
+		var_insert_node(&mini->var_list, name, value);
 		return (VAR);
 	}
 	else
