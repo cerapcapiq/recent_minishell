@@ -1,30 +1,38 @@
-
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_utils.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 13:11:28 by abasarud          #+#    #+#             */
+/*   Updated: 2023/05/30 13:11:31 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char* ft_strstr(const char* haystack, const char* needle) {
-    if (*needle == '\0') {
-        return (char*)haystack;
-    }
+char	*ft_strstr(const char *haystack, const char *needle)
+{
+	const char	*h;
+	const char	*n;
 
-    while (*haystack) {
-        const char* h = haystack;
-        const char* n = needle;
-
-        while (*haystack && *n && *haystack == *n) {
-            haystack++;
-            n++;
-        }
-
-        if (*n == '\0') {
-            return (char*)h;
-        }
-
-        haystack = h + 1;
-    }
-
-    return NULL;
+	if (*needle == '\0')
+		return ((char *)haystack);
+	while (*haystack)
+	{
+		h = haystack;
+		n = needle;
+		while (*haystack && *n && *haystack == *n)
+		{
+			haystack++;
+			n++;
+		}
+		if (*n == '\0')
+			return ((char *)h);
+		haystack = h + 1;
+	}
+	return (NULL);
 }
 
 char	*ft_strremove(char *str, const char *sub)
