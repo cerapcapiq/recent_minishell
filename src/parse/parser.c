@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 13:23:40 by abasarud          #+#    #+#             */
+/*   Updated: 2023/05/30 15:45:58 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
 
-char *dollar_exit(char *av)
+char	*dollar_exit(char *av)
 {
-	 char exitStatus[16];
+	char	exit_status[16];
+
 	if (!ft_strcmp(av, "$?"))
 	{
-		snprintf(exitStatus, sizeof(exitStatus), "%d", g_exit_num);
-		strcpy(av, exitStatus);
+		snprintf(exit_status, sizeof(exit_status), "%d", g_exit_num);
+		strcpy(av, exit_status);
 	}
 	return (av);
 }
@@ -20,12 +32,12 @@ void	parse(t_mini *mini, char *input)
 	t_token	*first;
 	char	*cpy;
 
-    cpy = NULL;
-    first = NULL;
+	cpy = NULL;
+	first = NULL;
 	split = NULL;
 	if (input == NULL)
 		exit(0);
-    input = add_spaces_around_pipe(input);
+	input = add_spaces_around_pipe(input);
 	cpy = ft_strdup(input);
 	split = ft_new_split(cpy, ' ');
 	first = new_token(mini, *split);

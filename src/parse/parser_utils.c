@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser_utils.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 13:23:37 by abasarud          #+#    #+#             */
+/*   Updated: 2023/05/30 13:27:11 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
 
@@ -30,10 +41,8 @@ char	*ft_strtok(char *str, const char *delimiters)
 		buffer = str;
 	if (buffer == NULL || *buffer == '\0')
 		return (NULL);
-
 	token = buffer;
 	delimiter = ft_strpbrk(buffer, delimiters);
-
 	if (delimiter != NULL)
 	{
 		*delimiter = '\0';

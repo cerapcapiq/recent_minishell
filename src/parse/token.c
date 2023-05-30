@@ -1,5 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/05/30 13:23:42 by abasarud          #+#    #+#             */
+/*   Updated: 2023/05/30 15:46:21 by abasarud         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <string.h>
 
 int	builtin_cmd(char *token)
 {
@@ -28,7 +40,6 @@ int	if_var(char *token)
 			return (VAR);
 			break ;
 		}
-
 		token++;
 	}
 	return (0);
@@ -51,14 +62,6 @@ int	delim_token(char *token)
 
 int	token_type(t_mini *mini, char *token)
 {
-	// char	command[256];
-
-	// if (!ft_strcmp(token, "$?"))
-	// {
-	// 	snprintf(command, sizeof(command), "%d", g_exit_num);
-	// 	token = command;
-	// 	return (CMD);
-	// }
 	if (delim_token(token))
 	{
 		mini->cmd = 1;
@@ -68,16 +71,18 @@ int	token_type(t_mini *mini, char *token)
 		return (ARG);
 	else
 		mini->cmd = 0;
-	if (builtin_cmd(token))		
+	if (builtin_cmd(token))
 	{
 		printf("var is buitl in = %s", token);
 		return (BUILTIN);
 	}
 	else if (if_var(token))
 	{
-  	    char* name = ft_strtok(token, "=");
-        char* value = ft_strtok(NULL, "=");
-		var_insertNode(&mini->varListHead , name, value);
+		char* name = strtok(token, "=");
+        char* value = strtok(NULL, "=");
+		printf("name %s", name);
+		printf("value %s", value);
+		var_insert_node(&mini->var_list, name, value);		
 		return (VAR);
 	}
 	else
