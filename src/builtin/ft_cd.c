@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:59:53 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 16:04:08 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 16:33:13 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,27 +62,25 @@
 
 int	cd(int argc, char **argv, t_node *env_list)
 {
-	char	**old_pwd;
-	char	*cwd;
+	char	*old_pwd[] = {"OLDPWD", "OLDPWD", "OLD_PWD"};
+	char	*cwd = malloc(1024);
 	char	curr[1024];
-	char	**pwd;
+	char	*pwd[] = {"PWD", "PWD"};
 
-	old_pwd = (char *[]){"OLDPWD", "OLDPWD"};
-	pwd = (char *[]){"PWD", "PWD"};
 	(void) argc;
-	cwd = NULL;
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	if (getcwd(cwd, sizeof(cwd)))
 	{
+		printf("cwd is  sssss %s\n", cwd);
 		delete_node(&env_list, &old_pwd[0]);
 		insert_node(&env_list, *old_pwd, cwd);
 	}
-	else
-		printf("error\n");
 	chdir(argv[1]);
 	if (getcwd(curr, sizeof(curr)) != NULL)
 	{
+		printf("cwd %s\n", curr);
 		delete_node(&env_list, &pwd[0]);
 		insert_node(&env_list, *pwd, curr);
 	}
+	free(cwd);
 	return (0);
 }
