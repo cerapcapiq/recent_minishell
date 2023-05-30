@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:39:31 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 14:45:28 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:51:10 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,18 @@
 # define PROMPT		0
 # define EOT		100
 
-typedef struct Node
-{
-	char		*name;
-	char		*value;
-	struct Node	*next;
-}	t_node;
-
-typedef struct My_node
+typedef struct s_node
 {
 	char			*name;
 	char			*value;
-	struct My_node	*next;
+	struct s_node	*next;
+}	t_node;
+
+typedef struct s_var
+{
+	char			*name;
+	char			*value;
+	struct s_var	*next;
 }	t_var;
 
 typedef struct s_token
@@ -82,6 +82,11 @@ typedef struct s_mini
 }	t_mini;
 
 int		g_exit_num;
+
+//main
+void	init_main(int argc, char **argv);
+t_mini	*init_mini(void);
+
 //parse
 
 void	parse(t_mini *mini, char *input);
@@ -93,6 +98,8 @@ char	*add_spaces_around_pipe(const char *s);
 //token
 t_token	*new_token(t_mini *mini, char *data);
 void	token_addend(char *data, t_mini *mini);
+int		builtin_cmd(char *token);
+int		delim_token(char *token);
 
 //quote
 int		closed_quote(char *line);
@@ -102,6 +109,7 @@ char	*ft_delete_quote(char *data);
 char	*ft_delete_quote_sin(char *data);
 int		detect_q(char *data);
 int		ft_double_detect_quote(char *data);
+char	*dollar_exit(char *av);
 
 //execute
 int		execute(t_mini *mini);
@@ -113,7 +121,8 @@ int		execute_builtin(char **argv, char *command, t_mini *ms);
 //builtin
 int		find_substring(const char *string, const char *substring);
 void	ft_export(char **str, t_node *env_list, t_var *var_list);
-int		echo(int argc, char **argv, t_token curr, t_var *var_list, t_node *env_list);
+int		echo(int argc, char **argv, t_token curr,
+			t_var *var_list, t_node *env_list);
 int		cd(int argc, char **argv, t_node *env_list);
 int		pwd(void);
 int		mini_exit(char **argv);
