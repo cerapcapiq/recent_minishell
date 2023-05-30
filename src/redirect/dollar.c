@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 14:42:25 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/26 16:40:17 by abasarud         ###   ########.fr       */
+/*   Created: 2023/05/30 13:41:16 by abasarud          #+#    #+#             */
+/*   Updated: 2023/05/30 14:22:09 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int	for_env(char *token)
 {
-	if (findSubstring(token, "="))
+	if (find_substring(token, "="))
 	{
 		return (ENV);
 		printf("in able env\n");
@@ -62,24 +62,34 @@ char	*ft_strcpy(char *dest, char *src)
 	return (dest);
 }
 
-char *ft_delete_quote(char* data) {
-    int len = ft_strlen(data);
-	char *new = NULL;
-    if (len >= 2 && data[0] == '"' && data[len - 1] == '"') {
-        ft_memmove(data, data + 1, len - 2);
-        data[len - 2] = '\0';
-    }
+char	*ft_delete_quote(char *data)
+{
+	int		len;
+	char	*new;
+
+	len = ft_strlen(data);
+	new = NULL;
+	if (len >= 2 && data[0] == '"' && data[len - 1] == '"')
+	{
+		ft_memmove(data, data + 1, len - 2);
+		data[len - 2] = '\0';
+	}
 	new = data;
-	return new;
+	return (new);
 }
 
-char *ft_delete_quote_sin(char* data) {
-    int len = ft_strlen(data);
-	char *new = NULL;
-    if (len >= 2 && data[0] == '\'' && data[len - 1] == '\'') {
-        ft_memmove(data, data + 1, len - 2);
-        data[len - 2] = '\0';
-    }
+char	*ft_delete_quote_sin(char *data)
+{
+	int		len;
+	char	*new;
+
+	len = ft_strlen(data);
+	new = NULL;
+	if (len >= 2 && data[0] == '\'' && data[len - 1] == '\'')
+	{
+		ft_memmove(data, data + 1, len - 2);
+		data[len - 2] = '\0';
+	}
 	new = data;
-	return new;
+	return (new);
 }
