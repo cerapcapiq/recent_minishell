@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:06 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/28 18:53:38 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/30 14:16:37 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,31 +29,31 @@ void	print_echo_args(char **argv, int start)
 	}
 }
 
-void checkinsidestruct(Node *envListHead2, MyNode *envListHead, char* name) {
-    char* value = var_getEnvValue(envListHead, name);
-    if (value != NULL) {
-        printf("%s", value);
-        return;
-    }
+void	checkinsidestruct(t_node *env_list2, t_var *env_list, char *name)
+{
+	char	*value;
 
-    value = getEnvValue(envListHead2, name);
-    if (value != NULL) {
-        printf("%s", value);
-        return;
-    }
-
+	value = var_get_env_value(env_list, name);
+	if (value != NULL)
+	{
+		printf("%s", value);
+		return ;
+	}
+	value = get_env_value(env_list2, name);
+	if (value != NULL)
+	{
+		printf("%s", value);
+		return ;
+	}
 	if (value == NULL)
-printf("%s", name);
-return ;
-    // Environment variable not found in either list
+		printf("%s", name);
+	return ;
 }
 
-int	echo(int argc, char **argv, t_token curr, MyNode *varListHead, Node* envListHead)
+int	echo(int argc, char **argv, t_token curr, t_var *var_list, t_node *env_list)
 {
-
 	int	i;
 	int	flag;
-	//  (void) envListHead;
 
 	if (argc < 2)
 		return (1);
@@ -66,10 +66,8 @@ int	echo(int argc, char **argv, t_token curr, MyNode *varListHead, Node* envList
 	}
 	if (curr.quote != 1)
 	{
-		// argv[i] = ft_delete_quote(argv[i]);
-		// if (ft_dollar(argv[i]))
 		argv[i] = ft_strremove(argv[i], "$");
-		checkinsidestruct(envListHead, varListHead, argv[i]);
+		checkinsidestruct(env_list, var_list, argv[i]);
 	}
 	else
 		print_echo_args(argv, i);
@@ -77,45 +75,3 @@ int	echo(int argc, char **argv, t_token curr, MyNode *varListHead, Node* envList
 		printf("\n");
 	return (0);
 }
-
-/*int	echo(int argc, char **argv, t_token curr)
-{
-	int		flag;
-	char	*arg;
-	int		i;
-
-	if (argc < 2)
-		return (1);
-	flag = 0;
-	if (ft_strncmp(argv[1], "-n", 2) == 0)
-	{
-		flag = 1;
-		argv++;
-		argc--;
-	}
-	i = 1;
-	while (i < argc)
-	{
-		arg = argv[i];
-		if (curr.quote == 2 && ft_dollar(arg))
-		{
-			show_var(ft_delete_quote(strremove(arg, "$")), head_ref);
-			printf("in here\n");
-		}
-		else if (curr.quote == 0)
-		{
-			if (ft_dollar(arg))
-				show_var(strremove(arg, "$"), head_ref);
-			else
-				printf("%s", arg);
-			if (i < argc - 1)
-				printf(" ");
-		}
-		else
-			printf("%s", arg);
-		i++;
-	}
-	if (flag == 0)
-		printf("\n");
-	return (0);
-}*/

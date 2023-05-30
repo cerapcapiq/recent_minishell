@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:59:53 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/26 18:07:38 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 15:41:19 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,7 @@
 // 	s = ft_var_content("OLDPWD", head_ref);
 // 	return (s);
 // }
-#include <string.h>
-int	cd(int argc, char **argv, Node* envListHead)
-{
-		(void) argc;
-	 char *old_pwd[] = {"OLDPWD", "OLDPWD", "OLDPWD"};
-	 char cwd[1024];
-    if (getcwd(cwd, sizeof(cwd)) != NULL)
-{
-		deleteNode(&envListHead, &old_pwd[0]);
-		insertNode(&envListHead, *old_pwd, cwd);
-}
-else 
-printf("error\n");
 // (void) mini;
-
 	// if (ft_strcmp(argv[1], "-"))
 	// {
 	// 	now = getcwd(arg, 1024);
@@ -67,23 +53,36 @@ printf("error\n");
 	// }
 	// else
 	// {
-
 		// char *now = getcwd(*argv, 1024);
 		// char *old_pwd = "OLDPWD";
 		// printf("now is %s", now);
 		// printf("old path %s", old_pwd);
-		// deleteNode(&mini->envListHead, &old_pwd);
-		// insertNode(&mini->envListHead, old_pwd, now);
-		chdir(argv[1]);
-		char curr[1024];
-		char *pwd[] = {"PWD", "PWD"};
-    if (getcwd(curr, sizeof(curr)) != NULL)
+		// deletet_node(&mini->env_list, &old_pwd);
+		// insertt_node(&mini->env_list, old_pwd, now);
+
+int	cd(int argc, char **argv, t_node *env_list)
 {
+	char	*old_pwd;
+	char	*cwd;
+	char	curr[1024];
+	char	*pwd;
 
-		deleteNode(&envListHead, &pwd[0]);
-		insertNode(&envListHead, *pwd, curr);
-}
-
-	// }
+	old_pwd = {"OLDPWD", "OLDPWD", "OLDPWD"};
+	pwd = {"PWD", "PWD"};
+	(void) argc;
+	cwd = NULL;
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		delete_node(&env_list, &old_pwd[0]);
+		insert_node(&env_list, *old_pwd, cwd);
+	}
+	else
+		printf("error\n");
+	chdir(argv[1]);
+	if (getcwd(curr, sizeof(curr)) != NULL)
+	{
+		delete_node(&env_list, &pwd[0]);
+		insert_node(&env_list, *pwd, curr);
+	}
 	return (0);
 }
