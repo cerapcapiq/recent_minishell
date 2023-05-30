@@ -6,31 +6,11 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:18:36 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 16:11:09 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:41:21 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-t_mini	*init_mini(void)
-{
-	t_mini	*mini;
-
-	mini = (t_mini *)malloc(sizeof(t_mini));
-	mini->tokens = 0;
-	mini->cmd = 1;
-	mini->pipe_read = -1;
-	mini->pipe_write = -1;
-	mini->input = -1;
-	mini->output = -1;
-	mini->stdin = dup(STDIN_FILENO);
-	mini->stdout = dup(STDOUT_FILENO);
-	mini->execute_code = 0;
-	mini->env = NULL;
-	mini->env_list = NULL;
-	mini->var_list = NULL;
-	return (mini);
-}
 
 void	init_main(int argc, char **argv)
 {

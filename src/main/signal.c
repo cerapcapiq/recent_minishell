@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:52 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/28 22:18:09 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/30 18:41:08 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,26 @@
 //ctrl z = sigstp ()
 //ctrl d = eof --> exit || done!
 
+t_mini	*init_mini(void)
+{
+	t_mini	*mini;
+
+	mini = (t_mini *)malloc(sizeof(t_mini));
+	mini->tokens = 0;
+	mini->cmd = 1;
+	mini->pipe_read = -1;
+	mini->pipe_write = -1;
+	mini->input = -1;
+	mini->output = -1;
+	mini->stdin = dup(STDIN_FILENO);
+	mini->stdout = dup(STDOUT_FILENO);
+	mini->execute_code = 0;
+	mini->env = NULL;
+	mini->env_list = NULL;
+	mini->var_list = NULL;
+	return (mini);
+}
+
 void	sig_handler(int signum)
 {
 	printf("%d done", signum);
@@ -26,7 +46,7 @@ static void	int_handler(int __attribute__((unused)) signal)
 {
 	printf("\n");
 	rl_on_new_line();
-	rl_replace_line(" ", 0);
+	// rl_replace_line(" ", 0);
 	rl_redisplay();
 }
 
