@@ -23,7 +23,7 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 		argc = count_argc(argv);
 	if (!ft_strcmp(command, "echo"))
 	{
-		if (argc < 2)
+		if (argc < 2 || (!ft_strcmp(argv[1], "-n")))
 			printf("\n");
 		else
 			builtin_cmd = echo(argc, argv, *token.next, ms->var_list, ms->env_list);
