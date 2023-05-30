@@ -6,22 +6,12 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:41:16 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 14:22:09 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:22:04 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../libft/libft.h"
-
-int	for_env(char *token)
-{
-	if (find_substring(token, "="))
-	{
-		return (ENV);
-		printf("in able env\n");
-	}
-	return (0);
-}
 
 int	ft_detect_dollar(char	*s1)
 {
