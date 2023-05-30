@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:06:28 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 15:44:27 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:25:34 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 	int	builtin_cmd;
 
 	builtin_cmd = 0;
-	if (token.type != VAR)
-		argc = count_argc(argv);
+	argc = count_argc(argv);
 	if (!ft_strcmp(command, "echo"))
 	{
 		if (argc < 2 || (!ft_strcmp(argv[1], "-n")))
 			printf("\n");
 		else
-			builtin_cmd = echo(argc, argv, *token.next, ms->var_list, ms->env_list);
+			builtin_cmd = echo(argc, argv, *token.next,
+					ms->var_list, ms->env_list);
 	}
 	else if (!ft_strcmp(command, "pwd"))
 		builtin_cmd = pwd();
