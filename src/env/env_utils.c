@@ -6,11 +6,21 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:55:34 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 17:58:10 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:22:21 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+int	for_env(char *token)
+{
+	if (find_substring(token, "="))
+	{
+		return (ENV);
+		printf("in able env\n");
+	}
+	return (0);
+}
 
 char	*get_env_value(t_node *env_list, char *name)
 {
