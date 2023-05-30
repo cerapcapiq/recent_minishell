@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:00:17 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:01:19 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:07:11 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**var_ft_getenv(t_var *envList)
 	i = 0;
 	while (current != NULL)
 	{
-		len = ft_strlen(current->name) + strlen(current->value) + 2;
+		len = ft_strlen(current->name) + ft_strlen(current->value) + 2;
 		variable[i] = (char *)malloc(len * sizeof(char));
 		snprintf(variable[i], len, "%s=%s", current->name, current->value);
 		if (it_works(variable[i]))
