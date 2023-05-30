@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:36 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/18 16:56:16 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 18:00:01 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,36 @@ void	agrv_free(char **argv)
 		free(argv[i++]);
 	}
 	free(argv);
+}
+
+void	free_var(t_var	*head)
+{
+	t_var	*current;
+	t_var	*next;
+
+	current = head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->name);
+		free(current->value);
+		free(current);
+		current = next;
+	}
+}
+
+void	free_head(t_node *head)
+{
+	t_node	*current;
+	t_node	*next;
+
+	current = head;
+	while (current != NULL)
+	{
+		next = current->next;
+		free(current->name);
+		free(current->value);
+		free(current);
+		current = next;
+	}
 }
