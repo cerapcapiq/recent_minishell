@@ -15,20 +15,19 @@
 
 char	*dollar_exit(char *av)
 {
-	char	exit_status[16];
+	char	*exit_status;
 
+	exit_status = NULL;
 	if (!ft_strcmp(av, "$?"))
-	{
-		snprintf(exit_status, sizeof(exit_status), "%d", g_exit_num);
-		strcpy(av, exit_status);
-	}
-	return (av);
+		exit_status = ft_itoa(g_exit_num);
+	return (exit_status);
 }
 
 void	parse(t_mini *mini, char *input)
 {
 	char	**split;
 	int		i;
+	int		k;
 	t_token	*first;
 	char	*cpy;
 
@@ -40,6 +39,13 @@ void	parse(t_mini *mini, char *input)
 	input = add_spaces_around_pipe(input);
 	cpy = ft_strdup(input);
 	split = ft_new_split(cpy, ' ');
+	k = 0;
+	while (split[k])
+	{
+		if (!ft_strcmp(split[k], "$?"))
+			split[k] = dollar_exit(split[k]);
+		k++;
+	}
 	first = new_token(mini, *split);
 	mini->tokens = first;
 	i = 0;
