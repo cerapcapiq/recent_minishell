@@ -6,68 +6,57 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:58:39 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/26 11:12:05 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/30 14:17:17 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-// char	*findSubstring(char *str, const char *to_find)
-// {
-// 	int	i;
-// 	int	j;
+int	find_substring(const char *string, const char *substring)
+{
+	int	stringlen;
+	int	substringlen;
+	int	j;
+	int	i;
 
-// 	i = 0;
-// 	if (to_find[0] == '\0')
-// 		return (str);
-// 	while (*str != '\0')
-// 	{
-// 		j = 0;
-// 		while (str[i + j] != '\0' && str[i + j] == to_find[j])
-// 		{
-// 			if (to_find[j + 1] == '\0')
-// 				return (&str[i]);
-// 			++j;
-// 		}
-// 		++i;
-// 	}
-// 	return (0);
-// }
-#include <string.h>
-
-int findSubstring(const char* string, const char* substring) {
-    int stringLen = ft_strlen(string);
-    int substringLen = ft_strlen(substring);
-    
-    for (int i = 0; i <= stringLen - substringLen; i++) {
-        int j;
-        for (j = 0; j < substringLen; j++) {
-            if (string[i + j] != substring[j])
-                break;
-        }
-        
-        if (j == substringLen)
-            return i;  // Found the substring at index i
-    }
-    
-    return -1;  // Substring not found
+	stringlen = ft_strlen(string);
+	substringlen = ft_strlen(substring);
+	i = 0;
+	while (i <= stringlen - substringlen)
+	{
+		j = 0;
+		while (j < substringlen)
+		{
+			if (string[i + j] != substring[j])
+				break ;
+			j++;
+		}
+		if (j == substringlen)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
-
-void	ft_export(char **str, Node* envListHead, MyNode *varListHead)
+int	ft_export(char **str, t_node *env_list, t_var *var_list)
 {
-    int i = 1;
-    char *new = NULL;
+	int		i;
+	char	*new;
 
-     new =  var_getEnvValue(varListHead, str[i]);
-    insertNode(&envListHead, str[i], new);
+	i = 1;
+	new = NULL;
+	new = var_get_env_value(var_list, str[i]);
+	if (new == NULL)
+		return (1);
+	insert_node(&env_list, str[i], new);
+	return (0);
 }
 
 void	ft_unset(char **str)
 {
-	int i ;
+	int	i;
+
 	i = 1;
 	printf("all the %s", str[i]);
-
-		return ;
+	return ;
 }
