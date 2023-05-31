@@ -31,7 +31,7 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 	else if (!ft_strcmp(command, "pwd"))
 		builtin_cmd = pwd();
 	else if (!ft_strcmp(command, "export"))
-		ft_export(argv, ms->env_list, ms->var_list);
+		builtin_cmd = ft_export(argv, ms->env_list, ms->var_list);
 	else if (!ft_strcmp(command, "env"))
 		print_list(ms->env_list);
 	else if (!ft_strcmp(command, "unset"))
@@ -48,13 +48,14 @@ static	void	post_call(char **argv, char *command, t_mini *ms, int exit_code)
 		argc = count_argc(argv);
 	exit_code = 0;
 	if (!ft_strcmp(command, "cd"))
-		cd(argc, argv, ms->env_list);
+		exit_code = cd(argc, argv, ms->env_list);
 	else if (!ft_strcmp(command, "exit"))
 		mini_exit(argv);
 	else if (!ft_strcmp(command, "export"))
-		ft_export(argv, ms->env_list, ms->var_list);
+		exit_code = ft_export(argv, ms->env_list, ms->var_list);
 	else if (!ft_strcmp(command, "unset"))
 		delete_node(&ms->env_list, argv);
+	g_exit_num = exit_code;
 	ms->execute_code = exit_code;
 }
 
