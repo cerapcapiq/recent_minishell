@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:06:28 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:25:34 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:43:20 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 		if (argc < 2 || (!ft_strcmp(argv[1], "-n")))
 			printf("\n");
 		else
-			builtin_cmd = echo(argc, argv, *token.next,
-					ms->var_list, ms->env_list);
+			builtin_cmd = echo(argc, argv, *token.next, ms);
 	}
 	else if (!ft_strcmp(command, "pwd"))
 		builtin_cmd = pwd();

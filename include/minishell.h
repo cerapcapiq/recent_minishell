@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:39:31 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:51:10 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/31 21:37:22 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int		execute_builtin(char **argv, char *command, t_mini *ms);
 int		find_substring(const char *string, const char *substring);
 int		ft_export(char **str, t_node *env_list, t_var *var_list);
 int		echo(int argc, char **argv, t_token curr,
-			t_var *var_list, t_node *env_list);
+			t_mini *mini);
 int		cd(int argc, char **argv, t_node *env_list);
 int		pwd(void);
 int		mini_exit(char **argv);
@@ -160,6 +160,8 @@ char	**ft_getenv(t_node *envList);
 void	print_list(t_node *head);
 void	delete_node(t_node **head, char **name);
 void	insert_node(t_node **head, char *name, char *value);
+int		get_env_count(t_node *envList);
+void	allocate_env_variable(char **variable, t_node *current, int i);
 
 //free
 void	agrv_free(char **argv);

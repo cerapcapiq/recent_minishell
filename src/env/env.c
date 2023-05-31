@@ -20,34 +20,30 @@
 char	**ft_getenv(t_node *envList)
 {
 	int		count;
-	t_node	*current;
-	char	**variable;
 	int		i;
-	int		len;
+	char	**variable;
+	t_node 	*current;
 
-	current = envList;
-	variable = NULL;
-	count = 0;
-	while (current != NULL)
-	{
-		count++;
-		current = current->next;
-	}
+	count = get_env_count(envList);
 	variable = (char **)malloc((count + 1) * sizeof(char *));
+
 	if (variable == NULL)
 		return (NULL);
+
 	current = envList;
 	i = 0;
+
 	while (current != NULL)
 	{
-		len = ft_strlen(current->name) + ft_strlen(current->value) + 2;
-		variable[i] = (char *)malloc(len * sizeof(char));
-		snprintf(variable[i], len, "%s=%s", current->name, current->value);
-		if (it_works(variable[i]))
+		allocate_env_variable(variable, current, i);
+
+		if (variable[i] != NULL && it_works(variable[i]))
 			break ;
+
 		current = current->next;
 		i++;
 	}
+
 	variable[i] = NULL;
 	return (variable);
 }

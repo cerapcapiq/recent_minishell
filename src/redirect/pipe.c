@@ -6,12 +6,11 @@
 /*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:45 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/28 17:21:46 by gualee           ###   ########.fr       */
+/*   Updated: 2023/05/31 21:06:57 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
 
 int	create_pipe(t_mini *mini)
 {

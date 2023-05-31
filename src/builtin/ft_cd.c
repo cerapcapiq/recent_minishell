@@ -3,95 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:59:53 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 16:33:13 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/31 21:06:15 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include "../libft/libft.h"
 
-// void	check_old_path(void)
-// {
-// 	char	**s;
-// 	int		i;
+static int	cd_too_many_arguments(void)
+{
+	printf("minishell: cd: too many arguments\n");
+	return (1);
+}
 
-// 	s = environ;
-// 	i = 0;
-// 	while (s[i])
-// 	{
-// 		if (findSubstring(s[i], "OLDPWD"))
-// 			printf("%s\n [%d] \n", s[i], i);
-// 		i++;
-// 	}
-// }
+static void	update_old_pwd(t_node **env_list)
+{
+	char	cwd[1024];
 
-// char	*save_old_path(void)
-// {
-// 	char	*s;
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		delete_node(env_list, (char *[]){"OLDPWD", NULL});
+		insert_node(env_list, "OLDPWD", cwd);
+	}
+	else
+	{
+		printf("error\n");
+	}
+}
 
-// 	s = ft_var_content("OLDPWD", head_ref);
-// 	return (s);
-// }
-// (void) mini;
-	// if (ft_strcmp(argv[1], "-"))
-	// {
-	// 	now = getcwd(arg, 1024);
-	// 	curr = save_old_path();
-	// }
-	// if (!ft_strcmp(argv[1], "~"))
-	// {
-	// 	ft_home_dir();
-	// 	return (0);
-	// }
-	// if (!ft_strcmp(argv[1], "-"))
-	// {
-	// 	ft_prev_dir(now);
-	// 	return (0);
-	// }
-	// else
-	// {
-		// char *now = getcwd(*argv, 1024);
-		// char *old_pwd = "OLDPWD";
-		// printf("now is %s", now);
-		// printf("old path %s", old_pwd);
-		// deletet_node(&mini->env_list, &old_pwd);
-		// insertt_node(&mini->env_list, old_pwd, now);
+static int	update_pwd(t_node **env_list)
+{
+	char	curr[1024];
+
+	if (getcwd(curr, sizeof(curr)) != NULL)
+	{
+		delete_node(env_list, (char *[]){"PWD", NULL});
+		insert_node(env_list, "PWD", curr);
+		return (0);
+	}
+	return (1);
+}
 
 int	cd(int argc, char **argv, t_node *env_list)
 {
-	char	*old_pwd[] = {"OLDPWD", "OLDPWD", "OLD_PWD"};
-	char	cwd[1024];
-	char	curr[1024];
-	char	*pwd[] = {"PWD", "PWD"};
-	int		exit;
+	int	exit_status;
 
+	exit_status = chdir(argv[1]);
 	if (argc > 2)
+		return (cd_too_many_arguments());
+	update_old_pwd(&env_list);
+	if (exit_status != 0)
 	{
-		printf("minishell : cd: too many arguments\n");
-		return (1);
+		printf("minishell: cd: %s: No such file or directory\n", argv[1]);
+		return (exit_status);
 	}
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		printf("cwd is  sssss %s\n", cwd);
-		delete_node(&env_list, &old_pwd[0]);
-		insert_node(&env_list, *old_pwd, cwd);
-	}
-	else
-		printf("error\n");
-	exit = chdir(argv[1]);
-	if (exit != 0)
-		{
-			printf("minishell : cd: %s: No such file or directory\n", argv[1]);
-			return (exit);
-		}
-	else if (getcwd(curr, sizeof(curr)) != NULL)
-	{
-		printf("cwd %s\n", curr);
-		delete_node(&env_list, &pwd[0]);
-		insert_node(&env_list, *pwd, curr);
-	}
-	return (0);
+	return (update_pwd(&env_list));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:06 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 14:16:37 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/05/31 19:43:10 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	checkinsidestruct(t_node *env_list2, t_var *env_list, char *name)
 	return ;
 }
 
-int	echo(int argc, char **argv, t_token curr, t_var *var_list, t_node *env_list)
+int	echo(int argc, char **argv, t_token curr, t_mini *mini)
 {
 	int	i;
 	int	flag;
@@ -67,7 +67,7 @@ int	echo(int argc, char **argv, t_token curr, t_var *var_list, t_node *env_list)
 	if (curr.quote != 1)
 	{
 		argv[i] = ft_strremove(argv[i], "$");
-		checkinsidestruct(env_list, var_list, argv[i]);
+		checkinsidestruct(mini->env_list, mini->var_list, argv[i]);
 	}
 	else
 		print_echo_args(argv, i);
