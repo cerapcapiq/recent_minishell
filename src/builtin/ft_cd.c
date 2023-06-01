@@ -50,7 +50,7 @@ static int	update_pwd(t_node **env_list)
 int	cd(int argc, char **argv, t_node **env_list)
 {
 	int	exit_status;
-	
+
 	if (argc > 2)
 		return (cd_too_many_arguments());
 	update_old_pwd(env_list);
