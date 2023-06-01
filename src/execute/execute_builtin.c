@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:06:28 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/31 19:43:20 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/01 13:07:48 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static	void	post_call(char **argv, char *command, t_mini *ms, int exit_code)
 		argc = count_argc(argv);
 	exit_code = 0;
 	if (!ft_strcmp(command, "cd"))
-		exit_code = cd(argc, argv, ms->env_list);
+		exit_code = cd(argc, argv, &ms->env_list);
 	else if (!ft_strcmp(command, "exit"))
 		mini_exit(argv);
 	else if (!ft_strcmp(command, "export"))
