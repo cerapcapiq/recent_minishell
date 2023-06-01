@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:39:31 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/31 21:37:22 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/01 13:06:58 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ int		find_substring(const char *string, const char *substring);
 int		ft_export(char **str, t_node *env_list, t_var *var_list);
 int		echo(int argc, char **argv, t_token curr,
 			t_mini *mini);
-int		cd(int argc, char **argv, t_node *env_list);
+int		cd(int argc, char **argv, t_node **env_list);
 int		pwd(void);
 int		mini_exit(char **argv);
 void	ft_prev_dir(char *path);
