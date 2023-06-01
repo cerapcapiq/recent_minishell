@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:59:53 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/31 21:06:15 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/01 13:17:10 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	update_old_pwd(t_node **env_list)
 
 	if (getcwd(cwd, sizeof(cwd)) != NULL)
 	{
-		delete_node(env_list, (char *[]){"OLDPWD", NULL});
+		delete_node(env_list, (char *[]){"OLDPWD", "OLDPWD" });
 		insert_node(env_list, "OLDPWD", cwd);
 	}
 	else
@@ -40,25 +40,25 @@ static int	update_pwd(t_node **env_list)
 
 	if (getcwd(curr, sizeof(curr)) != NULL)
 	{
-		delete_node(env_list, (char *[]){"PWD", NULL});
+		delete_node(env_list, (char *[]){"PWD", "PWD"});
 		insert_node(env_list, "PWD", curr);
 		return (0);
 	}
 	return (1);
 }
 
-int	cd(int argc, char **argv, t_node *env_list)
+int	cd(int argc, char **argv, t_node **env_list)
 {
 	int	exit_status;
-
-	exit_status = chdir(argv[1]);
+	
 	if (argc > 2)
 		return (cd_too_many_arguments());
-	update_old_pwd(&env_list);
+	update_old_pwd(env_list);
+	exit_status = chdir(argv[1]);
 	if (exit_status != 0)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", argv[1]);
 		return (exit_status);
 	}
-	return (update_pwd(&env_list));
+	return (update_pwd(env_list));
 }
