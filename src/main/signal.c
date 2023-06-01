@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:52 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:41:08 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:26:56 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	int_handler(int __attribute__((unused)) signal)
 {
 	printf("\n");
 	rl_on_new_line();
-	// rl_replace_line(" ", 0);
+	rl_replace_line("", 0);
 	rl_redisplay();
 }
 

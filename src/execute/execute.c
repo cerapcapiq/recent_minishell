@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:04:49 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 16:11:33 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/01 16:46:00 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,30 +46,36 @@ int	execute_other(char **argv, t_mini *mini)
 	return (mini->execute_code);
 }
 
-int	execute(t_mini *mini)
+void	execute_command(t_mini *mini, t_token *command)
 {
 	char	**argv;
-	t_token	*tok;
-	t_token	*command;
 	int		i;
+
+	argv = convert_argv(command);
+	if (argv == NULL)
+		return ;
+	i = 0;
+	while (argv[i] != NULL)
+	{
+		if (find_substring(argv[i], "$") != -1)
+			argv[i] = check_dollar(mini, argv[i]);
+		i++;
+	}
+	call_pipe_redirect(mini, command, command->next);
+	mini->execute_code = execute_other(argv, mini);
+}
+
+int	execute(t_mini *mini)
+{
+	t_token	*tok;
 
 	tok = mini->tokens;
 	while (tok)
 	{
-		command = tok;
-		argv = convert_argv(command);
-		i = 0;
-		while (argv[i] != NULL)
-		{
-			if (find_substring(argv[i], "$") != -1)
-				argv[i] = check_dollar(mini, argv[i]);
-			i++;
-		}
+		execute_command(mini, tok);
 		tok = tok->next;
 		while (tok && tok->type == ARG)
 			tok = tok->next;
-		call_pipe_redirect(mini, command, tok);
-		mini->execute_code = execute_other(argv, mini);
 	}
 	wait(NULL);
 	return (0);
