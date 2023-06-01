@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:00:17 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:28:03 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:21:01 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,40 +41,40 @@ void	var_delete_node(t_var **head, char **name)
 	}
 }
 
-char	**var_ft_getenv(t_var *envList)
-{
-	int		count;
-	int		i;
-	int		len;
-	t_var	*current;
-	char	**variable;
+// char	**var_ft_getenv(t_var *envList)
+// {
+// 	int		count;
+// 	int		i;
+// 	int		len;
+// 	t_var	*current;
+// 	char	**variable;
 
-	count = 0;
-	current = envList;
-	variable = NULL;
-	while (current != NULL)
-	{
-		count++;
-		current = current->next;
-	}
-	variable = (char **)malloc((count + 1) * sizeof(char *));
-	if (variable == NULL)
-		return (NULL);
-	current = envList;
-	i = 0;
-	while (current != NULL)
-	{
-		len = ft_strlen(current->name) + ft_strlen(current->value) + 2;
-		variable[i] = (char *)malloc(len * sizeof(char));
-		snprintf(variable[i], len, "%s=%s", current->name, current->value);
-		if (it_works(variable[i]))
-			break ;
-		current = current->next;
-		i++;
-	}
-	variable[i] = NULL;
-	return (variable);
-}
+// 	count = 0;
+// 	current = envList;
+// 	variable = NULL;
+// 	while (current != NULL)
+// 	{
+// 		count++;
+// 		current = current->next;
+// 	}
+// 	variable = (char **)malloc((count + 1) * sizeof(char *));
+// 	if (variable == NULL)
+// 		return (NULL);
+// 	current = envList;
+// 	i = 0;
+// 	while (current != NULL)
+// 	{
+// 		len = ft_strlen(current->name) + ft_strlen(current->value) + 2;
+// 		variable[i] = (char *)malloc(len * sizeof(char));
+// 		snprintf(variable[i], len, "%s=%s", current->name, current->value);
+// 		if (it_works(variable[i]))
+// 			break ;
+// 		current = current->next;
+// 		i++;
+// 	}
+// 	variable[i] = NULL;
+// 	return (variable);
+// }
 
 void	var_print_list(t_var *head)
 {

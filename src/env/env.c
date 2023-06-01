@@ -22,28 +22,22 @@ char	**ft_getenv(t_node *envList)
 	int		count;
 	int		i;
 	char	**variable;
-	t_node 	*current;
+	t_node	*current;
 
 	count = get_env_count(envList);
 	variable = (char **)malloc((count + 1) * sizeof(char *));
-
 	if (variable == NULL)
 		return (NULL);
-
 	current = envList;
 	i = 0;
-
 	while (current != NULL)
 	{
 		allocate_env_variable(variable, current, i);
-
 		if (variable[i] != NULL && it_works(variable[i]))
 			break ;
-
 		current = current->next;
 		i++;
 	}
-
 	variable[i] = NULL;
 	return (variable);
 }

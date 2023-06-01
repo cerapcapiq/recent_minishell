@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:55:34 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/31 21:34:45 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/01 11:21:47 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,3 @@ void	print_list(t_node *head)
 		printf("booba\n");
 	return ;
 }
-
