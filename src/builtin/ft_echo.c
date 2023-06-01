@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:06 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/31 19:43:10 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/01 15:57:37 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,10 @@ void	print_echo_args(char **argv, int start)
 	i = start;
 	while (argv[i])
 	{
-		if (closed_quote(argv[i]) || closed_dub_quote(argv[i]))
+		if (closed_dub_quote(argv[i]))
 			argv[i] = ft_delete_quote(argv[i]);
+		else if (closed_quote(argv[i]))
+			argv[i] = ft_delete_quote_sin(argv[i]);
 		printf("%s", argv[i]);
 		if (argv[i + 1])
 			printf(" ");
@@ -29,25 +31,22 @@ void	print_echo_args(char **argv, int start)
 	}
 }
 
-void	checkinsidestruct(t_node *env_list2, t_var *env_list, char *name)
+char	*checkinsidestruct(t_node *env_list2, t_var *env_list, char *name)
 {
 	char	*value;
 
+	if (closed_dub_quote(name))
+			name = ft_delete_quote(name);
+	if (*name == '$')
+		name++;
 	value = var_get_env_value(env_list, name);
 	if (value != NULL)
-	{
-		printf("%s", value);
-		return ;
-	}
+		return (value);
 	value = get_env_value(env_list2, name);
 	if (value != NULL)
-	{
-		printf("%s", value);
-		return ;
-	}
-	if (value == NULL)
-		printf("%s", name);
-	return ;
+		return (value);
+	name = ft_strjoin("$", name);
+	return (name);
 }
 
 int	echo(int argc, char **argv, t_token curr, t_mini *mini)
@@ -66,8 +65,8 @@ int	echo(int argc, char **argv, t_token curr, t_mini *mini)
 	}
 	if (curr.quote != 1)
 	{
-		argv[i] = ft_strremove(argv[i], "$");
-		checkinsidestruct(mini->env_list, mini->var_list, argv[i]);
+		argv[1] = checkinsidestruct(mini->env_list, mini->var_list, argv[1]);
+		print_echo_args(argv, i);
 	}
 	else
 		print_echo_args(argv, i);
