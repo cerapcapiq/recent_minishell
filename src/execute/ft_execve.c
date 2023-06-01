@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:15:45 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 14:17:55 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:16:56 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ int	ft_ex(char **argv, char **envp, int i, t_node *env_list)
 		while (waitpid(pid, &res, WNOHANG) == 0)
 			continue ;
 		if (WIFEXITED(res))
-		{
-			g_exit_num = WEXITSTATUS(res);
-			return (WEXITSTATUS(res));
-		}
+			return (g_exit_num = WEXITSTATUS(res));
 		else
 			return (1);
 	}
