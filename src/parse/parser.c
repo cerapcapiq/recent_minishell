@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:40 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:23:04 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/01 12:11:55 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,28 @@ char	*dollar_exit(char *av)
 	return (exit_status);
 }
 
+void	create_tokens(t_mini *mini, char **split)
+{
+	t_token	*first;
+	int		i;
+
+	first = NULL;
+	i = 0;
+	first = new_token(mini, *split);
+	mini->tokens = first;
+	while (split[++i])
+		token_addend(split[i], mini);
+}
+
+void	free_parser(char **split, t_mini *mini)
+{
+	token_free(mini->tokens);
+	agrv_free(split);
+}
+
 void	parse(t_mini *mini, char *input)
 {
 	char	**split;
-	int		i;
 	int		k;
 	t_token	*first;
 	char	*cpy;
@@ -46,13 +64,8 @@ void	parse(t_mini *mini, char *input)
 			split[k] = dollar_exit(split[k]);
 		k++;
 	}
-	first = new_token(mini, *split);
-	mini->tokens = first;
-	i = 0;
-	while (split[++i])
-		token_addend(split[i], mini);
+	create_tokens(mini, split);
 	execute(mini);
 	mini->cmd = 1;
-	token_free(mini->tokens);
-	agrv_free(split);
+	free_parser(split, mini);
 }
