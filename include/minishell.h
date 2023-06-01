@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:39:31 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 13:06:58 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/01 15:03:52 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	**ft_new_split(char *s, char c);
 char	*ft_strtok(char *str, const char *delimiters);
 int		ft_strcmp(char *s1, char *s2);
 char	*add_spaces_around_pipe(const char *s);
+char	*checkinsidestruct(t_node *env_list2, t_var *env_list, char *name);
 
 //token
 t_token	*new_token(t_mini *mini, char *data);
