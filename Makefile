@@ -22,7 +22,7 @@ MAIN_FILES	=	main signal
 PARSE_DIR	=	parse/
 PARSE_FILES	=	parser  token parser_utils new_split token_utils
 ENV_DIR     =	env/
-ENV_FILES	=	env env_helper var_space mem_free env_utils var_space_utils
+ENV_FILES	=	env env_helper var_space mem_free env_utils var_space_utils var_space_helper
 REDIR_DIR	=   redirect/
 REDIR_FILES =   dollar pipe quote redirection redirection_utils
 
