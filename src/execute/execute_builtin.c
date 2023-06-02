@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:06:28 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 13:07:48 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/02 08:52:56 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 	argc = count_argc(argv);
 	if (!ft_strcmp(command, "echo"))
 	{
-		if (argc < 2 || (!ft_strcmp(argv[1], "-n")))
+		if (argc < 2 || (!ft_strcmp(argv[1], "-n") && argc < 3))
 			printf("\n");
 		else
 			builtin_cmd = echo(argc, argv, *token.next, ms);
