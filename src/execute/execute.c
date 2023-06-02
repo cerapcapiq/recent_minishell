@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:04:49 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 16:46:00 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/02 16:00:43 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,49 +34,52 @@ char	*check_dollar(t_mini *mini, char *name)
 	return (name);
 }
 
-int	execute_other(char **argv, t_mini *mini)
+void replace_dollar_variables(t_mini *mini, char **argv)
+{
+    int i = 0;
+    
+    while (argv[i] != NULL)
+    {
+        if (find_substring(argv[i], "$") != -1)
+            argv[i] = check_dollar(mini, argv[i]);
+        
+        i++;
+    }
+}
+
+int	execute_others(t_mini *mini, t_token *command, char **argv)
 {
 	int	exit;
 
+	exit = 0;
+	if (command->type == BUILTIN || command->type == VAR)
+            mini->execute_code = execute_builtin(argv, command->str, mini);
+    else if (command->type == CMD)
+    {
+        replace_dollar_variables(mini, argv);
+        mini->execute_code = call_cmd(argv, mini);
+    }
 	exit = mini->execute_code;
-	if (mini->tokens->type == BUILTIN)
-		mini->execute_code = execute_builtin(argv, mini->tokens->str, mini);
-	else if (mini->tokens->type == CMD)
-		mini->execute_code = call_cmd(argv, mini);
-	return (mini->execute_code);
+	return (exit);
 }
 
-void	execute_command(t_mini *mini, t_token *command)
+int execute(t_mini *mini)
 {
+    t_token	*tok;
+	t_token	*command;
 	char	**argv;
-	int		i;
-
-	argv = convert_argv(command);
-	if (argv == NULL)
-		return ;
-	i = 0;
-	while (argv[i] != NULL)
-	{
-		if (find_substring(argv[i], "$") != -1)
-			argv[i] = check_dollar(mini, argv[i]);
-		i++;
-	}
-	call_pipe_redirect(mini, command, command->next);
-	mini->execute_code = execute_other(argv, mini);
-}
-
-int	execute(t_mini *mini)
-{
-	t_token	*tok;
-
-	tok = mini->tokens;
-	while (tok)
-	{
-		execute_command(mini, tok);
-		tok = tok->next;
-		while (tok && tok->type == ARG)
-			tok = tok->next;
-	}
-	wait(NULL);
-	return (0);
+	
+	tok = mini->tokens;   
+    while (tok)
+    {
+        command = tok;
+        argv = convert_argv(command);
+        tok = tok->next;
+        while (tok && tok->type == ARG)
+            tok = tok->next;
+		call_pipe_redirect(mini, command, tok);	
+		mini->execute_code = execute_others(mini, command, argv);
+    }
+    wait(NULL);
+    return 0;
 }
