@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:06 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/02 08:57:34 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/02 11:11:11 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,29 @@ void	print_echo_args(char **argv, int start)
 char	*checkinsidestruct(t_node *env_list2, t_var *env_list, char *name)
 {
 	char	*value;
+	int		flag;
 
+	flag = 0;
 	if (closed_dub_quote(name))
-			name = ft_delete_quote(name);
+	{
+		name = ft_delete_quote(name);
+		flag = 1;
+	}
 	if (*name == '$')
+	{
 		name++;
+		flag = 1;
+	}
 	value = var_get_env_value(env_list, name);
 	if (value != NULL)
 		return (value);
 	value = get_env_value(env_list2, name);
 	if (value != NULL)
 		return (value);
-	name = ft_strjoin("$", name);
+	else
+		flag = 0;
+	if (flag == 1)
+		name = ft_strjoin("$", name);
 	return (name);
 }
 
