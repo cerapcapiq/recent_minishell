@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:00:06 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/02 08:54:52 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/02 08:57:34 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ int	echo(int argc, char **argv, t_token curr, t_mini *mini)
 	}
 	if (curr.quote != 1)
 	{
-		argv[argc - 1] = checkinsidestruct(mini->env_list, mini->var_list, argv[argc - 1]);
+		argv[argc - 1] = checkinsidestruct(mini->env_list,
+				mini->var_list, argv[argc - 1]);
 		print_echo_args(argv, i);
 	}
 	else
