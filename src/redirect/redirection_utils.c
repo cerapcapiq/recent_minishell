@@ -13,7 +13,7 @@
 #include "../include/minishell.h"
 #define _XOPEN_SOURCE 600
 
-#define TMP_FILE	"temporary_file.txt"
+#define TMP_FILE	"kaka.txt"
 #define IN	0
 #define OUT	1
 
@@ -57,7 +57,7 @@ static void	clear_tmp_file_input(void)
 {
 	int		tmp_fd;
 
-	tmp_fd = open(TMP_FILE, O_WRONLY | O_TRUNC, 0600);
+	tmp_fd = open(TMP_FILE, O_WRONLY, 0600);
 	close(tmp_fd);
 }
 
@@ -71,7 +71,7 @@ static void	make_tmp_file_input(void)
 	close(tmp_fd);
 }
 
-void	here_doc_input(t_token *command, int pid)
+void	here_doc_input(t_mini *mini, t_token *command, int pid)
 {
 	int		tmp_fd;
 	int		save_fd_out;
@@ -95,6 +95,12 @@ void	here_doc_input(t_token *command, int pid)
 		clear_tmp_file_input();
 	}
 	make_tmp_file_input();
-	dup2(save_fd_out, STDOUT_FILENO);
-	close(save_fd_out);
+	if (command->next && (command->next->type == APPEND || command->next->type == TRUNC) && command->next->next)
+		redirect_output(mini, command->next->next, command->next->type);
+	else
+	{
+    	make_tmp_file_input();
+    	dup2(save_fd_out, STDOUT_FILENO);
+    	close(save_fd_out);
+	}
 }

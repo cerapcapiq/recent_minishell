@@ -45,7 +45,7 @@ int	redirect_output(t_mini *ms, t_token *token, int type)
 {
 	if (ms->output != -1)
 		close(ms->output);
-	if (type == TRUNC)
+	if (type == TRUNC) 
 		ms->output = open(token->str, O_CREAT | O_WRONLY
 				| O_TRUNC, S_IRWXU);
 	else if (type == APPEND)
