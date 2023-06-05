@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:42 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 11:54:07 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/04 20:58:30 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void	token_addend(char *data, t_mini *mini)
 	t_token	*tok;
 	t_token	*temp;
 
+	printf("token is : %s\n", data);
 	tok = mini->tokens;
 	while (tok->next)
 		tok = tok->next;

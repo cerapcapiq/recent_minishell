@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:45 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/02 16:02:51 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:00:51 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,8 @@ void	call_pipe_redirect(t_mini *mini, t_token *command, t_token *tok)
 {
 	if (!command)
 		return ;
-
 	if (tok && tok->type == PIPE)
 	{
-		
 		create_pipe(mini);
 		tok = tok->next;
 	}
@@ -58,7 +56,6 @@ void	call_pipe_redirect(t_mini *mini, t_token *command, t_token *tok)
 		tok->type = ARG;
 		redirect_input(mini, tok);
 	}
-
 }
 
 char	*add_spaces_around_pipe(const char *s)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:18:36 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 18:41:21 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:00:47 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_whitespace(char *input)
 
 static void	read_input(t_mini *mini, char *input)
 {
-	input = display_readline(input);
+	input = readline("@minishell> ");
 	if (!ft_whitespace(input))
 	{
 		parse(mini, input);

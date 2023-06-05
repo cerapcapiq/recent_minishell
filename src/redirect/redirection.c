@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:51 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/12 14:38:10 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/04 19:15:50 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	redirect_output(t_mini *ms, t_token *token, int type)
 {
 	if (ms->output != -1)
 		close(ms->output);
-	if (type == TRUNC) 
+	if (type == TRUNC)
 		ms->output = open(token->str, O_CREAT | O_WRONLY
 				| O_TRUNC, S_IRWXU);
 	else if (type == APPEND)

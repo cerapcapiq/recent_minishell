@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:40 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 12:11:55 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:06:41 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	parse(t_mini *mini, char *input)
 	if (input == NULL)
 		exit(0);
 	input = add_spaces_around_pipe(input);
+	detect_and_execute_commands(input);
 	cpy = ft_strdup(input);
 	split = ft_new_split(cpy, ' ');
 	k = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
+/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:17:23 by abasarud          #+#    #+#             */
-/*   Updated: 2023/04/19 13:55:27 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/05 21:07:33 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,13 @@ void	here_doc_input(t_mini *mini, t_token *command, int pid)
 		clear_tmp_file_input();
 	}
 	make_tmp_file_input();
-	if (command->next && (command->next->type == APPEND || command->next->type == TRUNC) && command->next->next)
+	if (command->next && (command->next->type == APPEND
+			|| command->next->type == TRUNC) && command->next->next)
 		redirect_output(mini, command->next->next, command->next->type);
 	else
 	{
-    	make_tmp_file_input();
-    	dup2(save_fd_out, STDOUT_FILENO);
-    	close(save_fd_out);
+		make_tmp_file_input();
+		dup2(save_fd_out, STDOUT_FILENO);
+		close(save_fd_out);
 	}
 }
