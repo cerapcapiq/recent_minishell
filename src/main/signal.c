@@ -6,7 +6,7 @@
 /*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:14:52 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/05 21:00:49 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/06 16:11:17 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,33 @@ void	sig_handler(int signum)
 	printf("%d done", signum);
 }
 
-static void	int_handler(int __attribute__((unused)) signal)
+//__attribute__((unused))
+void	int_handler(int signal)
 {
-	printf("\n");
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (signal == SIGINT)
+	{
+		printf("\n");
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 void	disable_veof(void)
 {
 	struct termios	ori_settings;
 	struct termios	new_settings;
+	bool			echo_ctl_chr;
 
 	tcgetattr(STDIN_FILENO, &ori_settings);
 	new_settings = ori_settings;
 	new_settings.c_cc[VEOF] = 4;
 	new_settings.c_cc[VINTR] = 3;
+	echo_ctl_chr = false;
+	if (echo_ctl_chr)
+		new_settings.c_lflag |= ECHOCTL;
+	else
+		new_settings.c_lflag &= ~(ECHOCTL);
 	tcsetattr(STDIN_FILENO, TCSANOW, &new_settings);
 }
 
