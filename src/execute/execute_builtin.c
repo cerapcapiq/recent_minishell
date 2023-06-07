@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:06:28 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/02 08:52:56 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/07 15:08:49 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 	int	builtin_cmd;
 
 	builtin_cmd = 0;
-	argc = count_argc(argv);
+	if (ms->tokens->type != VAR)
+		argc = count_argc(argv);
 	if (!ft_strcmp(command, "echo"))
 	{
 		if (argc < 2 || (!ft_strcmp(argv[1], "-n") && argc < 3))
@@ -30,7 +31,7 @@ int	call_builtin(char **argv, char *command, t_token token, t_mini *ms)
 	else if (!ft_strcmp(command, "pwd"))
 		builtin_cmd = pwd();
 	else if (!ft_strcmp(command, "export"))
-		builtin_cmd = ft_export(argv, ms->env_list, ms->var_list);
+		builtin_cmd = ft_export(argv, ms);
 	else if (!ft_strcmp(command, "env"))
 		print_list(ms->env_list);
 	else if (!ft_strcmp(command, "unset"))
@@ -51,7 +52,7 @@ static	void	post_call(char **argv, char *command, t_mini *ms, int exit_code)
 	else if (!ft_strcmp(command, "exit"))
 		mini_exit(argv);
 	else if (!ft_strcmp(command, "export"))
-		exit_code = ft_export(argv, ms->env_list, ms->var_list);
+		exit_code = ft_export(argv, ms);
 	else if (!ft_strcmp(command, "unset"))
 		delete_node(&ms->env_list, argv);
 	g_exit_num = exit_code;
