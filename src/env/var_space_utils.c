@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 18:00:17 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 12:21:01 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:57:47 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	var_delete_node(t_var **head, char **name)
 
 	i = 1;
 	if (*head == NULL || name[i] == NULL)
-		printf("nono\n");
+		return ;
 	current = *head;
 	previous = NULL;
 	while (current != NULL)

@@ -66,8 +66,8 @@ t_node	*create_node(char *name, char *value)
 	t_node	*newt_node;
 
 	newt_node = (t_node *)malloc(sizeof(t_node));
-	newt_node->name = ft_strdup(name);
-	newt_node->value = ft_strdup(value);
+	newt_node->name = strdup(name);
+	newt_node->value = strdup(value);
 	newt_node->next = NULL;
 	return (newt_node);
 }
