@@ -3,30 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:42 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/04 20:58:30 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/07 15:18:52 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #include <string.h>
 
-int	if_var(char *token)
+int	if_var(char *str)
 {
-	char	c;
+	int	i;
 
-	c = '=';
-	while (*token != '\0')
+	i = 0;
+	while (str[i] != '\0')
 	{
-		if (*token == c)
-		{
-			printf("the toke n var");
+		if (str[i] == '=')
 			return (VAR);
-			break ;
-		}
-		token++;
+		i++;
 	}
 	return (0);
 }
@@ -80,6 +76,8 @@ t_token	*new_token(t_mini *mini, char *data)
 
 	quote_type = 0;
 	res = (t_token *)malloc(sizeof(t_token));
+	if (res == NULL)
+		return (NULL);
 	res->quote = token_quote_type(data);
 	if (res->quote == 2)
 		res->str = ft_delete_quote(data);

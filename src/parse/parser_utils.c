@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:23:37 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 13:27:11 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/07 16:55:47 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,6 @@ char	*ft_strpbrk(const char *string, const char *charset)
 		string++;
 	}
 	return (NULL);
-}
-
-char	*ft_strtok(char *str, const char *delimiters)
-{
-	static char	*buffer;
-	char		*token;
-	char		*delimiter;
-
-	buffer = NULL;
-	if (str != NULL)
-		buffer = str;
-	if (buffer == NULL || *buffer == '\0')
-		return (NULL);
-	token = buffer;
-	delimiter = ft_strpbrk(buffer, delimiters);
-	if (delimiter != NULL)
-	{
-		*delimiter = '\0';
-		buffer = delimiter + 1;
-	}
-	else
-		buffer += ft_strlen(buffer);
-	return (token);
 }
 
 int	ft_strcmp(char *s1, char *s2)
