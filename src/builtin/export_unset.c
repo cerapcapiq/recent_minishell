@@ -6,11 +6,12 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:58:39 by abasarud          #+#    #+#             */
-/*   Updated: 2023/05/30 14:17:17 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:10:46 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <string.h>
 
 int	find_substring(const char *string, const char *substring)
 {
@@ -38,17 +39,41 @@ int	find_substring(const char *string, const char *substring)
 	return (-1);
 }
 
-int	ft_export(char **str, t_node *env_list, t_var *var_list)
+int	ft_export(char **str, t_mini *mini)
 {
 	int		i;
 	char	*new;
+	int		flag;
+	char	*cpy;
 
+	flag = 0;
 	i = 1;
 	new = NULL;
-	new = var_get_env_value(var_list, str[i]);
-	if (new == NULL)
-		return (1);
-	insert_node(&env_list, str[i], new);
+	if (*str[1] == '$')
+		ft_memmove(str[i], str[i] + 1, ft_strlen(str[i]));
+	while (str[i] != NULL)
+	{
+		if (find_substring(str[i], "=") != -1)
+		{
+			flag = 1;
+			break ;
+		}
+		i++;
+	}
+	i = 1;
+	if (flag == 1)
+	{
+		cpy = strtok(str[i], "=");
+		new = strtok(NULL, "=");
+	}
+	else
+	{
+		cpy = ft_strdup(str[i]);
+		new = var_get_env_value(mini->var_list, cpy);
+		if (new == NULL)
+			return (1);
+	}
+	insert_node(&mini->env_list, cpy, new);
 	return (0);
 }
 
