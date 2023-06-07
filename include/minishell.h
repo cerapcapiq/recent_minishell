@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:39:31 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/06 16:06:18 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:33:33 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,13 @@ int		redirect_input(t_mini *ms, t_token *token);
 void	here_doc_input(t_mini *mini, t_token *command, int pid);
 void	handle_pipe_character(const char *s, size_t i,
 			char **result, size_t *j);
+
+//heredoc
+int		create_temporary_file(void);
+void	get_and_write_input(int tmp_fd, char *eof);
+void	clear_tmp_file_input(void);
+void	make_tmp_file_trunc(char *str);
+void	make_tmp_file_input(void);
 
 //signal
 void	define_signal(void);
