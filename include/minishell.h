@@ -6,7 +6,7 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:39:31 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/07 13:33:33 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:03:39 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ int		execute_builtin(char **argv, char *command, t_mini *ms);
 
 //builtin
 int		find_substring(const char *string, const char *substring);
-int		ft_export(char **str, t_node *env_list, t_var *var_list);
+int		ft_export(char **str, t_mini *ms);
 int		echo(int argc, char **argv, t_token curr,
 			t_mini *mini);
 int		cd(int argc, char **argv, t_node **env_list);
@@ -165,6 +165,7 @@ void	free_var(t_var *head);
 void	var_insert_node(t_var **head, char *name, char *value);
 char	*var_get_env_value(t_var *env_list, char *name);
 void	var_print_list(t_var *head);
+void	remove_dollar_sign(char **str);
 
 //env
 t_node	*get_terminal_env_list(char *env[]);
