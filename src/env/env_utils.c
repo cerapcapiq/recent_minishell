@@ -6,11 +6,12 @@
 /*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 17:55:34 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/01 11:21:47 by abasarud         ###   ########.fr       */
+/*   Updated: 2023/06/07 17:08:56 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+#include <string.h>
 
 int	for_env(char *token)
 {
@@ -45,6 +46,9 @@ void	delete_node(t_node **head, char **name)
 	i = 1;
 	if (*head == NULL || name[i] == NULL)
 		printf("nono\n");
+	if (*name[1] == '$')
+		ft_memmove(name[1], name[1] + 1, ft_strlen(name[1]));
+	name[i] = strtok(name[i], "=");
 	current = *head;
 	previous = NULL;
 	while (current != NULL)
