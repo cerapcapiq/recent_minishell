@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:15:45 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/05 21:00:51 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:17:33 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ int	create_pipe(t_mini *mini)
 	return (1);
 }
 
+void	for_heredoc(t_mini *mini, t_token *tok)
+{
+	mini->heredoc = 1;
+	tok = tok->next;
+	tok->type = ARG;
+	here_doc_input(mini, tok, 0);
+}
+
 void	call_pipe_redirect(t_mini *mini, t_token *command, t_token *tok)
 {
 	if (!command)
@@ -40,9 +48,7 @@ void	call_pipe_redirect(t_mini *mini, t_token *command, t_token *tok)
 	}
 	else if (tok && tok->type == HEREDOC)
 	{
-		tok = tok->next;
-		tok->type = ARG;
-		here_doc_input(mini, tok, 0);
+		for_heredoc(mini, tok);
 	}
 	else if (tok && (tok->type == TRUNC || tok ->type == APPEND))
 	{

@@ -3,72 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abasarud <abasarud@student.42kl.edu.my>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 13:17:23 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/05 21:07:33 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/07 13:23:47 by abasarud         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 #define _XOPEN_SOURCE 600
 
+#define BUFFER_SIZE 1024
 #define TMP_FILE	"kaka.txt"
 #define IN	0
 #define OUT	1
 
-static int	create_temporary_file(void)
+void	redirect_or_print(t_mini *mini, t_token *next_command, int save_fd_out)
 {
-	int	fd;
+	int	null_fd;
 
-	fd = open(TMP_FILE, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (fd == -1)
-		printf("error\n");
-	return (fd);
-}
-
-static void	get_and_write_input(int tmp_fd, char *eof)
-{
-	char	*input;
-
-	while (true)
+	if (next_command && next_command->type == APPEND && next_command->next)
+		redirect_output(mini, next_command->next, next_command->type);
+	else if (next_command == NULL)
 	{
-		input = readline("> ");
-		if (!input)
-		{
-			printf("warning,");
-			close(tmp_fd);
-			exit(0);
-		}
-		if (ft_strcmp(input, eof))
-			ft_putendl_fd(input, tmp_fd);
-		else
-		{
-			close(tmp_fd);
-			free(input);
-			break ;
-		}
-		free(input);
+		make_tmp_file_input();
+		dup2(save_fd_out, STDOUT_FILENO);
+		close(save_fd_out);
 	}
-	exit(0);
-}
-
-static void	clear_tmp_file_input(void)
-{
-	int		tmp_fd;
-
-	tmp_fd = open(TMP_FILE, O_WRONLY, 0600);
-	close(tmp_fd);
-}
-
-static void	make_tmp_file_input(void)
-{
-	int		tmp_fd;
-
-	tmp_fd = open(TMP_FILE, O_RDONLY);
-	unlink(TMP_FILE);
-	dup2(tmp_fd, IN);
-	close(tmp_fd);
+	else
+	{
+		null_fd = open("/dev/null", O_CREAT | O_WRONLY);
+		dup2(null_fd, STDOUT_FILENO);
+		close(null_fd);
+		make_tmp_file_trunc(next_command->next->str);
+	}
 }
 
 void	here_doc_input(t_mini *mini, t_token *command, int pid)
@@ -91,17 +59,7 @@ void	here_doc_input(t_mini *mini, t_token *command, int pid)
 		get_and_write_input(tmp_fd, *eof);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status) && WEXITSTATUS(status) == 130)
-	{
 		clear_tmp_file_input();
-	}
 	make_tmp_file_input();
-	if (command->next && (command->next->type == APPEND
-			|| command->next->type == TRUNC) && command->next->next)
-		redirect_output(mini, command->next->next, command->next->type);
-	else
-	{
-		make_tmp_file_input();
-		dup2(save_fd_out, STDOUT_FILENO);
-		close(save_fd_out);
-	}
+	redirect_or_print(mini, command->next, save_fd_out);
 }
