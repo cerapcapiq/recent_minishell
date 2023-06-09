@@ -58,7 +58,7 @@ int	cd(int argc, char **argv, t_node **env_list)
 	if (exit_status != 0)
 	{
 		printf("minishell: cd: %s: No such file or directory\n", argv[1]);
-		return (exit_status);
+		return (1);
 	}
 	return (update_pwd(env_list));
 }

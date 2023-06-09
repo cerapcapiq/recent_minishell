@@ -71,7 +71,7 @@ int	ft_export(char **str, t_mini *mini)
 		cpy = ft_strdup(str[i]);
 		new = var_get_env_value(mini->var_list, cpy);
 		if (new == NULL)
-			return (1);
+			return (0);
 	}
 	insert_node(&mini->env_list, cpy, new);
 	return (0);
