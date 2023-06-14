@@ -82,13 +82,13 @@ void	var_print_list(t_var *head)
 
 	current = head;
 	if (current == NULL)
-		printf("booba\n");
+		printf("NULL\n");
 	while (current != NULL)
 	{
 		printf("%s=%s->\n", current->name, current->value);
 		current = current->next;
 	}
 	if (current == NULL)
-		printf("booba\n");
+		printf("NULL\n");
 	return ;
 }
