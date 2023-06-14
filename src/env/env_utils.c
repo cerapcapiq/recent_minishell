@@ -76,7 +76,7 @@ void	print_list(t_node *head)
 	current = head;
 	if (current == NULL)
 	{
-		printf("booba\n");
+		printf("NULL\n");
 		return ;
 	}
 	while (current != NULL)
@@ -85,6 +85,6 @@ void	print_list(t_node *head)
 		current = current->next;
 	}
 	if (current == NULL)
-		printf("booba\n");
+		printf("NULL\n");
 	return ;
 }
