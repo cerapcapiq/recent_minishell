@@ -6,7 +6,7 @@
 /*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:04:49 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/05 21:06:30 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:35:43 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,20 +47,39 @@ void	replace_dollar_variables(t_mini *mini, char **argv)
 	}
 }
 
-int	execute_others(t_mini *mini, t_token *command, char **argv)
+int execute_others(t_mini *mini, t_token *command, char **argv)
 {
-	int	exit;
+    int exit_code = 0;
+    pid_t pid;
 
-	exit = 0;
-	if (command->type == BUILTIN || command->type == VAR)
-			mini->execute_code = execute_builtin(argv, command->str, mini);
-	else if (command->type == CMD)
-	{
-		replace_dollar_variables(mini, argv);
-		mini->execute_code = call_cmd(argv, mini);
-	}
-	exit = mini->execute_code;
-	return (exit);
+    pid = fork();
+    if (pid == 0)
+    {
+        // Child process
+        if (command->type == BUILTIN || command->type == VAR)
+            mini->execute_code = execute_builtin(argv, command->str, mini);
+        else if (command->type == CMD)
+        {
+            replace_dollar_variables(mini, argv);
+            mini->execute_code = call_cmd(argv, mini);
+        }
+        exit_code = mini->execute_code;
+        exit(exit_code);
+    }
+    else if (pid > 0)
+    {
+        // Parent process
+        // Wait for the child process to finish
+        while (waitpid(pid, &exit_code, 0) == -1)
+            continue;
+
+        return WEXITSTATUS(exit_code);
+    }
+    else
+    {
+        // Fork failed
+        return -1;
+    }
 }
 
 int	execute(t_mini *mini)

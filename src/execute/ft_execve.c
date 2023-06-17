@@ -6,7 +6,7 @@
 /*   By: gualee <gualee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 13:15:45 by abasarud          #+#    #+#             */
-/*   Updated: 2023/06/05 20:44:56 by gualee           ###   ########.fr       */
+/*   Updated: 2023/06/17 17:39:56 by gualee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,34 @@ char	*ft_getpath(t_node *env_list, char **av)
 	return (NULL);
 }
 
-int	ft_ex(char **argv, char **envp, int i, t_node *env_list)
-{	
-	int	pid;
-	int	res;
+int ft_ex(char **argv, char **envp, int i, t_node *env_list)
+{    
+    int pid;
 
-	pid = fork();
-	if (!pid)
-	{
-		argv[i] = 0;
-		if (execve(*argv, envp, ft_getenv(env_list)) == -1)
-		{
-			printf("Error: %s command not found\n", *envp);
-			exit(1);
-		}
-	}
-	else
-	{
-		while (waitpid(pid, &res, WNOHANG) == 0)
-			continue ;
-		if (WIFEXITED(res))
-			return (g_exit_num = WEXITSTATUS(res));
-		else
-			return (1);
-	}
+    pid = fork();
+    if (!pid)
+    {
+        argv[i] = 0;
+        if (execve(*argv, envp, ft_getenv(env_list)) == -1)
+        {
+            printf("Error: %s command not found\n", *envp);
+            exit(1);
+        }
+    }
+    else if (pid > 0)
+    {
+        // Parent process
+        // Return immediately without waiting for child process
+        return 0;
+    }
+    else
+    {
+        // Fork failed
+        return -1;
+    }
 	return (0);
 }
+
 
 int	call_cmd(char **av, t_mini *ms)
 {
