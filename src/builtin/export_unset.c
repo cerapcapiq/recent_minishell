@@ -39,6 +39,20 @@ int	find_substring(const char *string, const char *substring)
 	return (-1);
 }
 
+int already_exist(t_node *env_list, char *cpy)
+{
+	t_node	*current;
+
+	current = env_list;
+	while (current != NULL)
+	{
+		if (!ft_strcmp(current->name, cpy))
+				return (1);
+		current = current->next;
+	}
+	return (0);
+}
+
 int	ft_export(char **str, t_mini *mini)
 {
 	int		i;
@@ -73,7 +87,8 @@ int	ft_export(char **str, t_mini *mini)
 		if (new == NULL)
 			return (0);
 	}
-	insert_node(&mini->env_list, cpy, new);
+	if (already_exist(mini->env_list, cpy) == 0)
+		insert_node(&mini->env_list, cpy, new);
 	return (0);
 }
 
