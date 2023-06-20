@@ -95,7 +95,7 @@ t_mini	*init_mini(void);
 //parse
 
 void	parse(t_mini *mini, char *input);
-char	**ft_new_split(char *s, char c);
+char	**ft_new_split(char *s);
 char	*ft_strtok(char *str, const char *delimiters);
 int		ft_strcmp(char *s1, char *s2);
 char	*add_spaces_around_pipe(const char *s);
