@@ -56,7 +56,7 @@ void	parse(t_mini *mini, char *input)
 		exit(0);
 	input = add_spaces_around_pipe(input);
 	cpy = ft_strdup(input);
-	split = ft_new_split(cpy, ' ');
+	split = ft_new_split(cpy);
 	k = 0;
 	while (split[k])
 	{

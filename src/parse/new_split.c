@@ -22,15 +22,8 @@ static void	ft_strcpy(char *dst, char *begin, char *end)
 static int	handle_quotes_tw(char **s)
 {
 	char	quote;
-	char	cancel;
 
 	quote = **s;
-	cancel = *(*s + 1);
-	if (quote && quote == '\\' && (cancel == '\"' || cancel == '\''))
-	{
-		(*s) += 2;
-		return (0);
-	}
 	if (!(quote == '\"' || quote == '\''))
 		return (0);
 	(*s)++;
@@ -62,25 +55,16 @@ static int	get_tw(char *s, char c)
 	return (res);
 }
 
-static int	handle_quotes(char **res, char *start, int *i, char **s)
+static int	quotes(char **res, char *start, int *i, char **s)
 {
 	char	quote;
-	char	cancel;
 
 	quote = **s;
-	cancel = *(*s + 1);
-	if (quote && quote == '\\' && (cancel == '\"' || cancel == '\''))
-	{
-		(*s) += 2;
-		return (0);
-	}
 	if (!(quote == '\"' || quote == '\''))
 		return (0);
 	(*s)++;
 	while (**s && **s != quote)
-	{
 		(*s)++;
-	}
 	if (**s == quote)
 		(*s)++;
 	res[*i] = (char *)malloc((char *)*s - start + 1);
@@ -88,14 +72,16 @@ static int	handle_quotes(char **res, char *start, int *i, char **s)
 	return (1);
 }
 
-char	**ft_new_split(char *s, char c)
+char	**ft_new_split(char *s)
 {
 	char	*start;
 	char	**res;
+	char	c;
 	int		i;
 
 	if (!s)
 		return (0);
+	c = ' ';
 	res = (char **)malloc((sizeof(char *) * (get_tw((char *)s, c) + 1)));
 	i = 0;
 	while (*s)
@@ -103,7 +89,7 @@ char	**ft_new_split(char *s, char c)
 		if (*s != c)
 		{
 			start = (char *)s;
-			if (handle_quotes(res, start, &i, &s))
+			if (quotes(res, start, &i, &s))
 				continue ;
 			while (*s && *s != c)
 				s++;
