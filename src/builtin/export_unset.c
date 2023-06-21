@@ -13,6 +13,31 @@
 #include "../include/minishell.h"
 #include <string.h>
 
+char	*ft_newstrstr(const char* haystack, const char* needle)
+{
+    if (*needle == '\0') {
+        return (char*)haystack;
+    }
+
+    while (*haystack) {
+        const char* h = haystack;
+        const char* n = needle;
+
+        while (*h && *n && (*h == *n)) {
+            h++;
+            n++;
+        }
+
+        if (*n == '\0') {
+            return (char*)haystack;
+        }
+
+        haystack++;
+    }
+
+    return NULL;
+}
+
 char	*ft_strtok(char *str, const char *delimiter)
 {
     static char *token = NULL;
@@ -20,7 +45,7 @@ char	*ft_strtok(char *str, const char *delimiter)
         token = str;
     if (token == NULL)
         return NULL;
-    char* delimiter_ptr = strstr(token, delimiter);
+    char* delimiter_ptr = ft_newstrstr(token, delimiter);
     if (delimiter_ptr == NULL)
 	{
         char* temp = token;
