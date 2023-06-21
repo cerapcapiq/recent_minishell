@@ -12,93 +12,91 @@
 
 #include "../include/minishell.h"
 
-static void	ft_strcpy(char *dst, char *begin, char *end)
+#include <stdlib.h>
+#include <string.h>
+
+static void copyString(char *destination, char *begin, char *end)
 {
-	while (begin < end)
-		*(dst++) = *(begin++);
-	*dst = 0;
+    while (begin < end)
+        *(destination++) = *(begin++);
+    *destination = '\0';
 }
 
-static int	handle_quotes_tw(char **s)
+static int handleQuotes(char **str)
 {
-	char	quote;
-
-	quote = **s;
-	if (!(quote == '\"' || quote == '\''))
-		return (0);
-	(*s)++;
-	while (**s && **s != quote)
-		(*s)++;
-	if (**s == quote)
-		(*s)++;
-	return (1);
+    char quote = **str;
+    if (!(quote == '\"' || quote == '\''))
+        return 0;
+    (*str)++;
+    while (**str && **str != quote)
+        (*str)++;
+    if (**str == quote)
+        (*str)++;
+    return 1;
 }
 
-static int	get_tw(char *s, char c)
+static int countWords(char *str, char delimiter)
 {
-	int		res;
-
-	res = 0;
-	while (*s)
-	{
-		if (!(*s == c))
-		{
-			res++;
-			if (handle_quotes_tw(&s))
-				continue ;
-			while (*s && !(*s == c))
-				s++;
-		}
-		else
-			s++;
-	}
-	return (res);
+    int count = 0;
+    while (*str)
+    {
+        if (!(*str == delimiter))
+        {
+            count++;
+            if (handleQuotes(&str))
+                continue;
+            while (*str && !(*str == delimiter))
+                str++;
+        }
+        else
+            str++;
+    }
+    return count;
 }
 
-static int	quotes(char **res, char *start, int *i, char **s)
+static int extractQuotes(char **result, char *start, int *index, char **str)
 {
-	char	quote;
-
-	quote = **s;
-	if (!(quote == '\"' || quote == '\''))
-		return (0);
-	(*s)++;
-	while (**s && **s != quote)
-		(*s)++;
-	if (**s == quote)
-		(*s)++;
-	res[*i] = (char *)malloc((char *)*s - start + 1);
-	ft_strcpy(res[(*i)++], start, (char *)*s);
-	return (1);
+    char quote = **str;
+    if (!(quote == '\"' || quote == '\''))
+        return 0;
+    (*str)++;
+    while (**str && **str != quote)
+        (*str)++;
+    if (**str == quote)
+        (*str)++;
+    result[*index] = (char *)malloc((char *)*str - start + 1);
+    copyString(result[(*index)++], start, (char *)*str);
+    return 1;
 }
 
-char	**ft_new_split(char *s)
+char **ft_new_split(char *str)
 {
-	char	*start;
-	char	**res;
-	char	c;
-	int		i;
+    char *start;
+    char **result;
+    char delimiter = ' ';
+    int index = 0;
 
-	if (!s)
-		return (0);
-	c = ' ';
-	res = (char **)malloc((sizeof(char *) * (get_tw((char *)s, c) + 1)));
-	i = 0;
-	while (*s)
-	{
-		if (*s != c)
-		{
-			start = (char *)s;
-			if (quotes(res, start, &i, &s))
-				continue ;
-			while (*s && *s != c)
-				s++;
-			res[i] = (char *)malloc((char *)s - start + 1);
-			ft_strcpy(res[i++], start, (char *)s);
-		}
-		else
-			s++;
-	}
-	res[i] = 0;
-	return (res);
+    if (!str)
+        return NULL;
+
+    result = (char **)malloc((sizeof(char *) * (countWords((char *)str, delimiter) + 1)));
+
+    while (*str)
+    {
+        if (*str != delimiter)
+        {
+            start = (char *)str;
+            if (extractQuotes(result, start, &index, &str))
+                continue;
+            while (*str && *str != delimiter)
+                str++;
+            result[index] = (char *)malloc((char *)str - start + 1);
+            copyString(result[index++], start, (char *)str);
+        }
+        else
+            str++;
+    }
+    result[index] = NULL;
+    return result;
 }
+
