@@ -13,6 +13,26 @@
 #include "../include/minishell.h"
 #include <string.h>
 
+char	*ft_strtok(char *str, const char *delimiter)
+{
+    static char *token = NULL;
+    if (str != NULL)
+        token = str;
+    if (token == NULL)
+        return NULL;
+    char* delimiter_ptr = strstr(token, delimiter);
+    if (delimiter_ptr == NULL)
+	{
+        char* temp = token;
+        token = NULL;
+        return temp;
+    }
+    *delimiter_ptr = '\0';
+    char* current_token = token;
+    token = delimiter_ptr + ft_strlen(delimiter);
+    return (current_token);
+}
+
 int	find_substring(const char *string, const char *substring)
 {
 	int	stringlen;
@@ -77,8 +97,8 @@ int	ft_export(char **str, t_mini *mini)
 	i = 1;
 	if (flag == 1)
 	{
-		cpy = strtok(str[i], "=");
-		new = strtok(NULL, "=");
+		cpy = ft_strtok(str[i], "=");
+		new = ft_strtok(NULL, "=");
 	}
 	else
 	{
